@@ -54,7 +54,8 @@ export class ExplainerPanel {
   }
 
   public static async explainWorkspaceDiagram(context: vscode.ExtensionContext, rootDir: string): Promise<void> {
-    await ExplainerPanel.explain(context, "", "markdown", "workspaceDiagram", "Architecture Diagram", rootDir);
+    const wsName = vscode.workspace.workspaceFolders?.[0]?.name || "Workspace";
+    await ExplainerPanel.explain(context, "", "markdown", "workspaceDiagram", wsName, rootDir);
   }
 
   private constructor(panel: vscode.WebviewPanel, private readonly _context: vscode.ExtensionContext) {
@@ -163,7 +164,7 @@ export class ExplainerPanel {
       file: fileName ? `Explain — ${fileName}` : "Explain File",
       businessLogic: "Business Logic",
       diagram: "Code Diagram",
-      workspaceDiagram: "Architecture Diagram",
+      workspaceDiagram: fileName ? `Architecture — ${fileName}` : "Architecture Overview",
     };
     const title = titleMap[mode];
 
@@ -250,8 +251,7 @@ export class ExplainerPanel {
         try { index = await buildIndex(rootDir, this._context); } catch { /* fallback */ }
       }
       if (index) {
-        const ctxMode = mode === "workspaceDiagram" ? "diagram" : "architecture";
-        const aiContext = buildAIContext(index, { mode: ctxMode, tokenBudget: 20000 }, rootDir);
+        const aiContext = buildAIContext(index, { mode: "architecture", tokenBudget: 22000 }, rootDir);
         const prompt = mode === "businessLogic"
           ? buildBusinessLogicPrompt(aiContext)
           : buildWorkspaceDiagramPrompt(aiContext);
@@ -780,15 +780,44 @@ Use Markdown. Be specific — cite real file paths and function names.`;
 }
 
 function buildWorkspaceDiagramPrompt(aiContext: string): string {
-  return `You are a senior software architect. Generate a Mermaid architecture diagram for this codebase.
+  return `You are a senior software architect reviewing a codebase. Produce a complete project brief using the structure below. Be specific — cite real file paths, function names, and module names from the context provided.
 
-STRICT RULES — violations will cause a syntax error:
-1. Use \`flowchart TD\` as the diagram type
-2. Declare EVERY node before using it in an edge: \`NodeA[Label Here]\`
-3. Labels must NOT contain: ( ) < > | \` { }
+---
+
+## What this project does
+Write 3–4 sentences describing the project's real-world purpose and who it's for.
+
+## Main purpose
+One clear sentence: what is the single core problem this software solves?
+
+## Key features
+Bullet list of the 5–8 most important capabilities. Each bullet: **Feature name** — one sentence description.
+
+## How it works — core flow
+Numbered steps walking through the main execution path from entry point to output. Cite specific files (e.g. \`src/extension.ts\`) and functions at each step.
+
+## Architecture breakdown
+
+| Module / File | Role | Key exports |
+|---|---|---|
+List the 6–10 most important files/modules, their role, and what they export or expose.
+
+## Tech stack & dependencies
+List the main technologies, frameworks, and external services used and why.
+
+## Architecture diagram
+
+Generate a Mermaid flowchart that shows the main modules and how they connect.
+
+STRICT SYNTAX RULES — any violation breaks rendering:
+1. First line must be: \`flowchart TD\`
+2. Declare EVERY node BEFORE using it in an edge: \`NodeA[Label]\` then \`NodeA --> NodeB\`
+3. Node labels must NOT contain: \`(\` \`)\` \`<\` \`>\` \`|\` \`{\` \`}\` or backticks
 4. Node IDs: ASCII letters, numbers, underscores ONLY — no spaces
-5. Maximum 12 nodes — group into subgraphs if the project is larger
-6. Return ONLY the \`\`\`mermaid ... \`\`\` code block, nothing else
+5. Maximum 12 nodes — group with \`subgraph\` blocks if needed
+6. Wrap in a \`\`\`mermaid code fence
+
+---
 
 ${aiContext}`;
 }
