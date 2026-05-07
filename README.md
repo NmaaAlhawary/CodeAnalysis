@@ -1,85 +1,150 @@
-<div align="center"></div>
+# Continue
 
-<h1 align="center">Continue</h1>
+Continue is an open-source AI coding assistant that integrates directly into your editor, enabling intelligent code completion, chat, and automation powered by large language models.
 
-<div align="center">
+## Features
 
-<a target="_blank" href="https://opensource.org/licenses/Apache-2.0" style="background:none">
-    <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" style="height: 22px;" />
-</a>
-<a target="_blank" href="https://docs.continue.dev" style="background:none">
-    <img src="https://img.shields.io/badge/Continue-docs-%23BE1B55.svg?logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNiAyNCIgZmlsbD0id2hpdGUiPgogIDxwYXRoIGQ9Ik0yMC41Mjg2IDMuMjY4MTFMMTkuMTUxMiA1LjY1Njk0TDIyLjYzMjggMTEuNjg0OUMyMi42NTgyIDExLjczMDYgMjIuNjczNSAxMS43ODY2IDIyLjY3MzUgMTEuODM3NEMyMi42NzM1IDExLjg4ODIgMjIuNjU4MiAxMS45NDQxIDIyLjYzMjggMTEuOTg5OUwxOS4xNTEyIDE4LjAyMjlMMjAuNTI4NiAyMC40MTE3TDI1LjQ3OTEgMTEuODM3NEwyMC41Mjg2IDMuMjYzMDNWMy4yNjgxMVpNMTguNjE3NiA1LjM0NjlMMTkuOTk1IDIuOTU4MDdIMTcuMjQwMkwxNS44NjI4IDUuMzQ2OUgxOC42MjI3SDE4LjYxNzZaTTE1Ljg1NzcgNS45NjY5N0wxOS4wNzUgMTEuNTMyNEgyMS44Mjk4TDE4LjYxNzYgNS45NjY5N0gxNS44NTc3Wk0xOC42MTc2IDE3LjcxNzlMMjEuODI5OCAxMi4xNDc0SDE5LjA3NUwxNS44NTc3IDE3LjcxNzlIMTguNjE3NlpNMTUuODU3NyAxOC4zMzhMMTcuMjM1MSAyMC43MTY3SDE5Ljk4OTlMMTguNjEyNSAxOC4zMzhIMTUuODUyNkgxNS44NTc3Wk02LjUyMDk4IDIxLjMwNjNDNi40NjUwNyAyMS4zMDYzIDYuNDE0MjQgMjEuMjkxIDYuMzY4NSAyMS4yNjU2QzYuMzIyNzYgMjEuMjQwMiA2LjI4MjA5IDIxLjE5OTUgNi4yNTY2OCAyMS4xNTM4TDIuNzcwMDIgMTUuMTIwN0gwLjAxNTI0ODJMNC45NjU3IDIzLjY5SDE0Ljg2MTVMMTMuNDg0MSAyMS4zMDYzSDYuNTI2MDZINi41MjA5OFpNMTQuMDE3OCAyMC45OTYyTDE1LjM5NTIgMjMuMzhMMTYuNzcyNiAyMC45OTExTDE1LjM5NTIgMTguNjAyM0wxNC4wMTc4IDIwLjk5MTFWMjAuOTk2MlpNMTQuODYxNSAxOC4yOTc0SDguNDM3MTJMNy4wNTk3MyAyMC42ODYySDEzLjQ4NDFMMTQuODYxNSAxOC4yOTc0Wk03Ljg5ODM2IDE3Ljk5MjRMNC42ODEwOCAxMi40MjE5TDMuMzAzNjkgMTQuODEwN0w2LjUyMDk4IDIwLjM4MTJMNy44OTgzNiAxNy45OTI0Wk0wLjAxMDE2NTQgMTQuNTAwN0gyLjc2NDk0TDQuMTQyMzIgMTIuMTExOEgxLjM5MjYzTDAuMDEwMTY1NCAxNC41MDA3Wk02LjI0MTQzIDIuNTQxM0M2LjI2Njg1IDIuNDk1NTYgNi4zMDc1MSAyLjQ1NDkgNi4zNTMyNSAyLjQyOTQ4QzYuMzk5IDIuNDA0MDcgNi40NTQ5IDIuMzg4ODIgNi41MDU3MyAyLjM4ODgySDEzLjQ3NEwxNC44NTE0IDBINC45NTA0NUwwIDguNTc0MzVIMi43NTQ3N0w2LjIzMTI3IDIuNTQ2MzhMNi4yNDE0MyAyLjU0MTNaTTQuMTQyMzIgMTEuNTc4MkwyLjc2NDk0IDkuMTg5MzRIMC4wMTAxNjU0TDEuMzg3NTUgMTEuNTc4Mkg0LjE0MjMyWk02LjUxMDgxIDMuMzEzODZMMy4yOTg2MSA4Ljg3OTNMNC42NzU5OSAxMS4yNjgxTDcuODg4MiA1LjcwMjY4TDYuNTEwODEgMy4zMTM4NlpNMTMuNDc5MSAzLjAwMzgySDcuMDQ0NDhMOC40MjE4NyA1LjM5MjY0SDE0Ljg1NjRMMTMuNDc5MSAzLjAwMzgyWk0xNS4zOTUyIDUuMDgyNkwxNi43Njc1IDIuNjk4ODZMMTUuMzk1MiAwLjMxMDAzOEwxNC4wMTc4IDIuNjkzNzhMMTUuMzk1MiA1LjA4MjZaIi8+Cjwvc3ZnPg==" style="height: 22px;" />
-</a>
-<a target="_blank" href="https://changelog.continue.dev" style="background:none">
-    <img src="https://img.shields.io/badge/changelog-%96EFF3" style="height: 22px;" />
-</a>
+- **Multi-package monorepo** — Modular architecture split across `core`, `gui`, `extensions/vscode`, and `binary` packages
+- **VS Code extension** — Deep IDE integration via `extensions/vscode` for inline suggestions and chat
+- **Standalone binary** — Headless `binary` package for running Continue outside the editor
+- **Google AI SDK support** — Built-in integration with `@ai-sdk/google` for Gemini model access
+- **TypeScript throughout** — All packages are fully typed with per-package `tsconfig.json` configurations
+- **Concurrent type-checking** — `tsc:watch` script monitors all packages simultaneously via `concurrently`
+- **Automated formatting** — Prettier enforced across all `.js`, `.jsx`, `.ts`, `.tsx`, `.json`, `.css`, and `.md` files
+- **Git hooks** — Pre-commit quality gates managed by Husky
 
-<p></p>
+## Installation
 
-**Source-controlled AI checks, enforceable in CI**
+### Prerequisites
 
-</div>
+- [Node.js](https://nodejs.org/) v18 or later
+- [npm](https://www.npmjs.com/) v9 or later
 
-![Banner](media/github-readme.png)
+### Steps
 
-## Getting started
+1. **Clone the repository**
 
-Paste this into your coding agent of choice:
+   ```bash
+   git clone https://github.com/continuedev/continue.git
+   cd continue
+   ```
 
-```
-Help me write checks for this codebase: https://continue.dev/walkthrough
-```
+2. **Install root dependencies**
 
-## How it works
+   ```bash
+   npm install
+   ```
 
-Continue runs agents on every pull request as GitHub status checks. Each agent is a markdown file in your repo at `.continue/checks/`. Green if the code looks good, red with a suggested diff if not. Here is an example that performs a security review:
+3. **Install dependencies for each package**
 
-```yaml
----
-name: Security Review
-description: Review PR for basic security vulnerabilities
----
-Review this PR and check that:
-  - No secrets or API keys are hardcoded
-  - All new API endpoints have input validation
-  - Error responses use the standard error format
-```
+   ```bash
+   cd core && npm install && cd ..
+   cd gui && npm install && cd ..
+   cd extensions/vscode && npm install && cd ../..
+   cd binary && npm install && cd ..
+   ```
 
-## Install CLI
+4. **Set up Git hooks**
 
-AI checks are powered by the open-source Continue CLI (`cn`).
+   ```bash
+   npm run prepare
+   ```
 
-**macOS / Linux:**
+### VS Code Extension (Development)
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/continuedev/continue/main/extensions/cli/scripts/install.sh | bash
-```
+1. Open the repository root in VS Code
+2. Press `F5` to launch the Extension Development Host
+3. The Continue panel will appear in the Activity Bar
 
-**Windows (PowerShell):**
+## Usage
 
-```powershell
-irm https://raw.githubusercontent.com/continuedev/continue/main/extensions/cli/scripts/install.ps1 | iex
-```
-
-Or with npm (requires Node.js 20+):
+### Start TypeScript watch mode (all packages)
 
 ```bash
-npm i -g @continuedev/cli
+npm run tsc:watch
 ```
 
-Then run:
+This runs four concurrent watchers — `gui`, `vscode`, `core`, and `binary` — each using their respective `tsconfig.json`:
+
+- `gui/tsconfig.json`
+- `extensions/vscode/tsconfig.json`
+- `core/tsconfig.json`
+- `binary/tsconfig.json`
+
+### Watch a single package
 
 ```bash
-cn
+# Core only
+npm run tsc:watch:core
+
+# VS Code extension only
+npm run tsc:watch:vscode
+
+# GUI only
+npm run tsc:watch:gui
+
+# Binary only
+npm run tsc:watch:binary
 ```
 
-Looking for the VS Code extension? [See here](extensions/vscode/README.md).
+### Format all source files
+
+```bash
+npm run format
+```
+
+### Check formatting without writing
+
+```bash
+npm run format:check
+```
+
+## Architecture
+
+```mermaid
+flowchart TD
+    Root[Continue Root]
+
+    subgraph Packages
+        Core[core - Business Logic]
+        GUI[gui - React UI]
+        VSCode[extensions/vscode - VS Code Extension]
+        Binary[binary - Standalone Binary]
+    end
+
+    subgraph External
+        GoogleAI[ai-sdk/google - Gemini Models]
+        LLM[LLM Providers]
+    end
+
+    Root --> Core
+    Root --> GUI
+    Root --> VSCode
+    Root --> Binary
+    VSCode --> Core
+    Binary --> Core
+    GUI --> Core
+    Core --> GoogleAI
+    GoogleAI --> LLM
+```
+
+### Module Descriptions
+
+| Package | Path | Role |
+|---|---|---|
+| **core** | `core/` | Central business logic: LLM orchestration, context retrieval, prompt construction, and model provider integrations including `@ai-sdk/google` |
+| **gui** | `gui/` | React-based chat and configuration UI, compiled and embedded into the VS Code webview |
+| **extensions/vscode** | `extensions/vscode/` | VS Code extension host process; bridges editor events, inline completions, and commands to `core` |
+| **binary** | `binary/` | Standalone Node.js binary that exposes Continue functionality outside of any editor environment |
 
 ## Contributing
 
-Read the [contributing guide](https://github.com/continuedev/continue/blob/main/CONTRIBUTING.md), and
-join the [GitHub Discussions](https://github.com/continuedev/continue/discussions).
+1. **Fork** the repository and create a feature branch: `git checkout -b feat/your-feature`
+2. **Install** all dependencies following the [Installation](#installation) steps above
+3. **Make changes** — keep each package's concerns separate (`core` for logic, `gui` for UI, `extensions/vscode` for editor integration)
+4. **Type-check** your changes: `npm run tsc:watch` (ensure zero errors across all packages)
+5. **Format** your code: `npm run format`
+6. **Commit** using a descriptive message and open a Pull Request against `main`
+7. All PRs must pass formatting checks (`npm run format:check`) enforced by Husky pre-commit hooks
 
-## License
-
-[Apache 2.0 © 2023-2024 Continue Dev, Inc.](./LICENSE)
+For larger changes, please open an issue first to discuss the proposed approach. See [docs.continue.dev](https://docs.continue.dev) for full developer documentation.
