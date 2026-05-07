@@ -1,22 +1,12 @@
-<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="bg" x1="32" y1="24" x2="224" y2="232" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#0F172A"/>
-      <stop offset="1" stop-color="#1E293B"/>
-    </linearGradient>
-    <linearGradient id="spark" x1="84" y1="68" x2="192" y2="176" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#22D3EE"/>
-      <stop offset="1" stop-color="#8B5CF6"/>
-    </linearGradient>
-  </defs>
-  <rect x="16" y="16" width="224" height="224" rx="52" fill="url(#bg)"/>
-  <rect x="52" y="56" width="88" height="88" rx="18" stroke="#E2E8F0" stroke-width="10"/>
-  <rect x="52" y="152" width="88" height="48" rx="14" stroke="#E2E8F0" stroke-width="10"/>
-  <rect x="148" y="112" width="56" height="88" rx="18" stroke="#E2E8F0" stroke-width="10"/>
-  <path d="M164 66L186 88L170 104L148 82L164 66Z" fill="url(#spark)"/>
-  <path d="M78 100H114" stroke="#22D3EE" stroke-width="8" stroke-linecap="round"/>
-  <path d="M78 176H114" stroke="#22D3EE" stroke-width="8" stroke-linecap="round"/>
-  <path d="M176 138V174" stroke="#A78BFA" stroke-width="8" stroke-linecap="round"/>
-  <circle cx="196" cy="60" r="12" fill="#22D3EE"/>
-  <circle cx="60" cy="210" r="8" fill="#8B5CF6" opacity="0.9"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <!-- Magnifying glass lens -->
+  <circle cx="6.2" cy="6.2" r="4.4" stroke="currentColor" stroke-width="1.4" fill="none"/>
+  <!-- Handle -->
+  <line x1="9.6" y1="9.6" x2="14.2" y2="14.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- < bracket inside lens -->
+  <path d="M5.2 4.8 L3.6 6.2 L5.2 7.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- > bracket inside lens -->
+  <path d="M7.2 4.8 L8.8 6.2 L7.2 7.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- spark dot (AI sparkle) at top-right of lens -->
+  <circle cx="9.8" cy="2.8" r="1.1" fill="currentColor" opacity="0.85"/>
 </svg>

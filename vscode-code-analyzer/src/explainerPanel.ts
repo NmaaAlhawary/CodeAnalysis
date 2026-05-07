@@ -709,7 +709,11 @@ window.addEventListener('message', async e => {
   const msg = e.data;
 
   if (msg.type === 'chunk') {
+    const isFirst = out.innerHTML === '';
     out.innerHTML = marked.parse(msg.text) + '<span class="cursor"></span>';
+    if (isFirst) {
+      document.getElementById('ai-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
     out.scrollTop = out.scrollHeight;
   }
 
