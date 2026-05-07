@@ -45,7 +45,7 @@ jobs:
 
       - name: Publish release asset for tags
         if: startsWith(github.ref, 'refs/tags/code-analyzer-v')
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: vscode-code-analyzer/*.vsix
           generate_release_notes: true
