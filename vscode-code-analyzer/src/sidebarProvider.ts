@@ -331,10 +331,10 @@ body{
   </div>
 </button>
 
-<button class="action" onclick="run('codeAnalyzer.restartExtension')">
+<button class="action" onclick="run('workbench.action.reloadWindow')">
   <div class="action-icon ic-gray">↺</div>
   <div class="action-text">
-    <div class="action-label">Restart Extension</div>
+    <div class="action-label">Restart Extension <span style="font-size:10px;opacity:.5;margin-left:4px">⌘⇧R</span></div>
     <div class="action-desc">Reload VS Code window</div>
   </div>
 </button>

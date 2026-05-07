@@ -197,6 +197,11 @@
         "command": "codeAnalyzer.openChat",
         "key": "ctrl+shift+c",
         "mac": "cmd+shift+c"
+      },
+      {
+        "command": "workbench.action.reloadWindow",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r"
       }
     ],
     "configuration": {

@@ -26,6 +26,7 @@ export class ExplainerPanel {
   private _lastTitle = "Code Explainer";
   private _mermaidRetries = 0;
   private _currentNonce = "";
+  private _streamAbort: AbortController | null = null;
 
   public static async explain(
     context: vscode.ExtensionContext,
@@ -131,6 +132,12 @@ export class ExplainerPanel {
           return;
         }
 
+        if (message.type === "stopStream") {
+          this._streamAbort?.abort();
+          this._streamAbort = null;
+          return;
+        }
+
         if (message.type === "regenerate" && this._lastRun) {
           this._mermaidRetries = 0;
           await this._run(
@@ -203,6 +210,10 @@ export class ExplainerPanel {
       }
     });
 
+    this._streamAbort?.abort();
+    this._streamAbort = new AbortController();
+    const abortSignal = this._streamAbort.signal;
+
     try {
       const messages = await this._buildMessages(code, languageId, mode, staticInfo, rootDir, focusFile);
       let accum = "";
@@ -217,7 +228,7 @@ export class ExplainerPanel {
             pendingChunks.push(chunk);
           }
         },
-        { maxTokens: 8192 },
+        { maxTokens: 8192, signal: abortSignal },
         this._context
       );
 
@@ -532,6 +543,7 @@ header h1{font-size:.88rem;font-weight:700;color:var(--tx);white-space:nowrap;ov
     <h1 id="panel-title">${title}</h1>
     <span class="model-chip" id="model-chip"></span>
     <div class="spinner" id="spin"></div>
+    <button class="tb stop-btn" id="stop-btn" title="Stop generation" style="display:none;color:#f87171;border-color:rgba(248,113,113,.3)">■ Stop</button>
   </div>
   <div class="toolbar">
     <button class="tb" id="copy-btn" title="Copy markdown">Copy</button>
@@ -607,9 +619,10 @@ mermaid.initialize({
 });
 
 const vscode = acquireVsCodeApi();
-const out    = document.getElementById('md-output');
-const spin   = document.getElementById('spin');
-const chip   = document.getElementById('model-chip');
+const out     = document.getElementById('md-output');
+const spin    = document.getElementById('spin');
+const stopBtn = document.getElementById('stop-btn');
+const chip    = document.getElementById('model-chip');
 let zoomLevel = 1;
 let streamingDone = false;
 
@@ -648,12 +661,19 @@ document.getElementById('drawio-btn')?.addEventListener('click', () => vscode.po
 document.getElementById('regen-btn').addEventListener('click', () => {
   streamingDone = false;
   spin.style.display = 'block';
+  stopBtn.style.display = 'inline-flex';
   chip.style.display = 'none';
   out.innerHTML = '<div class="thinking"><div class="thinking-dots"><span></span><span></span><span></span></div>Regenerating…</div>';
   const diagBar = document.getElementById('diag-bar');
   if (diagBar) diagBar.style.display = 'none';
   zoomLevel = 1;
   vscode.postMessage({ type: 'regenerate' });
+});
+
+stopBtn.addEventListener('click', () => {
+  vscode.postMessage({ type: 'stopStream' });
+  stopBtn.style.display = 'none';
+  spin.style.display = 'none';
 });
 
 // ── Node click → open file ──────────────────────────────────────────────────
@@ -712,6 +732,7 @@ window.addEventListener('message', async e => {
     const isFirst = out.innerHTML === '';
     out.innerHTML = marked.parse(msg.text) + '<span class="cursor"></span>';
     if (isFirst) {
+      stopBtn.style.display = 'inline-flex';
       document.getElementById('ai-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     out.scrollTop = out.scrollHeight;
@@ -720,6 +741,7 @@ window.addEventListener('message', async e => {
   if (msg.type === 'done') {
     streamingDone = true;
     spin.style.display = 'none';
+    stopBtn.style.display = 'none';
 
     out.innerHTML = marked.parse(msg.text);
 
@@ -733,6 +755,7 @@ window.addEventListener('message', async e => {
 
   if (msg.type === 'error') {
     spin.style.display = 'none';
+    stopBtn.style.display = 'none';
     out.innerHTML = \`
       <div class="error-box">
         <strong>\${msg.isKeyErr ? '🔑 No API Key' : '⚠ Error'}</strong>

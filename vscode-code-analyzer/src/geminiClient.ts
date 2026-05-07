@@ -14,6 +14,7 @@ export interface AICallOptions {
   temperature?: number;
   maxTokens?: number;
   taskType?: "explain" | "diagram" | "chat" | "docgen" | "architecture";
+  signal?: AbortSignal;
 }
 
 const SYSTEM_PROMPT = `You are Code Analyzer, an expert software architect and developer assistant embedded in VS Code.
@@ -97,6 +98,10 @@ export async function generateWithGemini(
   return generateWithAI([{ role: "user", content: prompt }], {}, context);
 }
 
+function forwardAbort(internal: AbortController, external?: AbortSignal): void {
+  if (external) { external.addEventListener("abort", () => internal.abort(), { once: true }); }
+}
+
 // ── Streaming entry point ─────────────────────────────────────────────────────
 export async function generateWithAIStreaming(
   messages: AIMessage[],
@@ -161,6 +166,7 @@ async function callDeepSeekStreaming(
   }
 
   const controller = new AbortController();
+  forwardAbort(controller, options.signal);
   const timeout = setTimeout(() => controller.abort(), 120000);
 
   try {
@@ -220,6 +226,7 @@ async function callGemini(
 
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
   const controller = new AbortController();
+  forwardAbort(controller, options.signal);
   const timeout = setTimeout(() => controller.abort(), 60000);
 
   try {
@@ -381,6 +388,7 @@ async function callClaudeStreaming(
 
   const { system, claudeMessages } = buildClaudeMessages(messages);
   const controller = new AbortController();
+  forwardAbort(controller, options.signal);
   const timeout = setTimeout(() => controller.abort(), 120000);
 
   try {
