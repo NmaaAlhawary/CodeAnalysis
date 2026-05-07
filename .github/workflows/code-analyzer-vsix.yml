@@ -1,0 +1,51 @@
+name: Code Analyzer VSIX
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "code-analyzer-v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-vsix:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: vscode-code-analyzer
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: vscode-code-analyzer/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build extension
+        run: npm run verify
+
+      - name: Package VSIX
+        run: npm run package:ci
+
+      - name: Upload VSIX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-analyzer-vsix
+          path: vscode-code-analyzer/*.vsix
+
+      - name: Publish release asset for tags
+        if: startsWith(github.ref, 'refs/tags/code-analyzer-v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: vscode-code-analyzer/*.vsix
+          generate_release_notes: true

@@ -1,254 +1,57 @@
 {
   "name": "codebase-intelligence",
   "displayName": "Codebase Intelligence",
-  "description": "Explain code, generate architecture diagrams, inspect business logic, and explore a live analysis dashboard in VS Code.",
+  "description": "One click. Full codebase report — dependency graph, file stats, and AI summary.",
   "version": "2.0.0",
   "publisher": "NmaaHawary",
   "engines": { "vscode": "^1.90.0" },
   "license": "SEE LICENSE IN LICENSE.md",
   "icon": "assets/icon.png",
-  "galleryBanner": {
-    "color": "#0f172a",
-    "theme": "dark"
-  },
-  "keywords": [
-    "ai",
-    "analysis",
-    "architecture",
-    "diagram",
-    "gemini",
-    "dashboard",
-    "business-logic",
-    "code-explainer"
-  ],
-  "categories": ["Other", "Visualization", "Programming Languages"],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/NmaaAlhawary/CodeAnalysis.git"
-  },
+  "galleryBanner": { "color": "#0a0a0f", "theme": "dark" },
+  "keywords": ["ai", "analysis", "dependency-graph", "codebase", "report"],
+  "categories": ["Other", "Visualization"],
+  "repository": { "type": "git", "url": "https://github.com/NmaaAlhawary/CodeAnalysis.git" },
   "homepage": "https://github.com/NmaaAlhawary/CodeAnalysis",
-  "bugs": {
-    "url": "https://github.com/NmaaAlhawary/CodeAnalysis/issues"
-  },
+  "bugs": { "url": "https://github.com/NmaaAlhawary/CodeAnalysis/issues" },
   "activationEvents": ["onStartupFinished"],
   "main": "./out/extension.js",
-  "preview": false,
   "contributes": {
-    "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "codeAnalyzer",
-          "title": "Code Analyzer",
-          "icon": "assets/icon.svg"
-        }
-      ]
-    },
-    "views": {
-      "codeAnalyzer": [
-        {
-          "id": "codeAnalyzerSidebar",
-          "name": "Code Analyzer",
-          "type": "webview"
-        }
-      ]
-    },
     "commands": [
       {
-        "command": "codeAnalyzer.openWorkspaceTools",
-        "title": "Code Analyzer: Workspace Tools",
-        "icon": "$(organization)"
+        "command": "codebaseIntelligence.generateReport",
+        "title": "Codebase Intelligence: Generate Report"
       },
       {
-        "command": "codeAnalyzer.openChat",
-        "title": "Code Analyzer: Open AI Chat",
-        "icon": "$(comment-discussion)"
-      },
-      {
-        "command": "codeAnalyzer.openDashboard",
-        "title": "Code Analyzer: Open Dashboard",
-        "icon": "$(graph)"
-      },
-      {
-        "command": "codeAnalyzer.explainSelection",
-        "title": "Code Analyzer: Explain Selected Code"
-      },
-      {
-        "command": "codeAnalyzer.explainFile",
-        "title": "Code Analyzer: Explain This File"
-      },
-      {
-        "command": "codeAnalyzer.businessLogic",
-        "title": "Code Analyzer: Understand Business Logic"
-      },
-      {
-        "command": "codeAnalyzer.generateDiagram",
-        "title": "Code Analyzer: Generate Diagram from Selection"
-      },
-      {
-        "command": "codeAnalyzer.generateWorkspaceDiagram",
-        "title": "Code Analyzer: Generate Workspace Diagram"
-      },
-      {
-        "command": "codeAnalyzer.configureGemini",
-        "title": "Code Analyzer: Configure AI Provider"
-      },
-      {
-        "command": "codeAnalyzer.explainCodeLens",
-        "title": "Code Analyzer: Explain (Code Lens)"
-      },
-      {
-        "command": "codeAnalyzer.reindex",
-        "title": "Code Analyzer: Re-index Workspace"
-      },
-      {
-        "command": "codeAnalyzer.findRelatedFiles",
-        "title": "Code Analyzer: Find Related Files"
-      },
-      {
-        "command": "codeAnalyzer.codeReview",
-        "title": "Code Analyzer: AI Code Review (Current File)"
-      },
-      {
-        "command": "codeAnalyzer.analyzeGithubRepo",
-        "title": "Code Analyzer: Analyze GitHub Repository"
-      },
-      {
-        "command": "codeAnalyzer.generateReadme",
-        "title": "Code Analyzer: Generate README"
-      },
-      {
-        "command": "codeAnalyzer.generateInlineDocs",
-        "title": "Code Analyzer: Generate Inline Documentation"
-      },
-      {
-        "command": "codeAnalyzer.generateArchitectureDoc",
-        "title": "Code Analyzer: Generate Architecture Document"
-      },
-      {
-        "command": "codeAnalyzer.restartExtension",
-        "title": "Code Analyzer: Restart Extension",
-        "icon": "$(refresh)"
-      }
-    ],
-    "menus": {
-      "editor/context": [
-        {
-          "command": "codeAnalyzer.explainSelection",
-          "when": "editorHasSelection",
-          "group": "codeAnalyzer@1"
-        },
-        {
-          "command": "codeAnalyzer.generateDiagram",
-          "when": "editorHasSelection",
-          "group": "codeAnalyzer@2"
-        },
-        {
-          "command": "codeAnalyzer.explainFile",
-          "group": "codeAnalyzer@3"
-        },
-        {
-          "command": "codeAnalyzer.generateInlineDocs",
-          "when": "resourceLangId == typescript || resourceLangId == javascript || resourceLangId == python",
-          "group": "codeAnalyzer@4"
-        }
-      ],
-      "editor/title": [
-        {
-          "command": "codeAnalyzer.openWorkspaceTools",
-          "group": "navigation@1"
-        },
-        {
-          "command": "codeAnalyzer.openDashboard",
-          "group": "navigation@2"
-        },
-        {
-          "command": "codeAnalyzer.findRelatedFiles",
-          "group": "navigation@3"
-        },
-        {
-          "command": "codeAnalyzer.codeReview",
-          "group": "navigation@4"
-        }
-      ]
-    },
-    "keybindings": [
-      {
-        "command": "codeAnalyzer.openWorkspaceTools",
-        "key": "ctrl+shift+a",
-        "mac": "cmd+shift+a"
-      },
-      {
-        "command": "codeAnalyzer.explainSelection",
-        "key": "ctrl+shift+e",
-        "mac": "cmd+shift+e",
-        "when": "editorHasSelection"
-      },
-      {
-        "command": "codeAnalyzer.openDashboard",
-        "key": "ctrl+shift+d",
-        "mac": "cmd+shift+d"
-      },
-      {
-        "command": "codeAnalyzer.generateWorkspaceDiagram",
-        "key": "ctrl+shift+g",
-        "mac": "cmd+shift+g"
-      },
-      {
-        "command": "codeAnalyzer.openChat",
-        "key": "ctrl+shift+c",
-        "mac": "cmd+shift+c"
-      },
-      {
-        "command": "workbench.action.reloadWindow",
-        "key": "ctrl+shift+r",
-        "mac": "cmd+shift+r"
+        "command": "codebaseIntelligence.configureProvider",
+        "title": "Codebase Intelligence: Configure AI Provider"
       }
     ],
     "configuration": {
       "id": "codeAnalyzer",
-      "title": "Code Analyzer",
+      "title": "Codebase Intelligence",
       "properties": {
-        "codeAnalyzer.geminiApiKey": {
-          "type": "string",
-          "default": "",
-          "description": "Gemini API key used for AI explanations and diagram generation.",
-          "markdownDescription": "Gemini API key used for AI explanations and diagram generation. You can also run the command **Code Analyzer: Configure Gemini API Key**.",
-          "scope": "application"
-        },
-        "codeAnalyzer.geminiModel": {
-          "type": "string",
-          "default": "gemini-2.5-flash",
-          "description": "Gemini model name for requests.",
-          "scope": "application"
-        },
-        "codeAnalyzer.enableCodeLens": {
-          "type": "boolean",
-          "default": true,
-          "description": "Show inline ✨ Explain lenses above functions and classes.",
-          "scope": "language-overridable"
-        },
         "codeAnalyzer.aiProvider": {
           "type": "string",
-          "enum": ["deepseek", "gemini", "claude"],
+          "enum": ["claude", "deepseek", "gemini"],
           "enumDescriptions": [
-            "DeepSeek (deepseek-chat) — fast and affordable",
-            "Google Gemini (gemini-2.5-flash)",
-            "Anthropic Claude (claude-sonnet-4-6) — highest quality"
+            "Anthropic Claude — highest quality",
+            "DeepSeek — fast and affordable",
+            "Google Gemini — free tier available"
           ],
           "default": "deepseek",
-          "description": "AI provider used for code explanations and diagrams.",
+          "description": "AI provider used for the codebase summary.",
           "scope": "application"
         },
         "codeAnalyzer.claudeApiKey": {
           "type": "string",
           "default": "",
-          "description": "Anthropic API key for Claude models. Get one at https://console.anthropic.com",
+          "description": "Anthropic API key. Get one at https://console.anthropic.com",
           "scope": "application"
         },
         "codeAnalyzer.claudeModel": {
           "type": "string",
           "default": "claude-sonnet-4-6",
-          "description": "Claude model name (e.g. claude-sonnet-4-6, claude-haiku-4-5).",
+          "description": "Claude model name.",
           "scope": "application"
         },
         "codeAnalyzer.deepseekApiKey": {
@@ -260,34 +63,19 @@
         "codeAnalyzer.deepseekModel": {
           "type": "string",
           "default": "deepseek-chat",
-          "description": "DeepSeek model name (deepseek-chat or deepseek-reasoner).",
+          "description": "DeepSeek model name.",
           "scope": "application"
         },
-        "codeAnalyzer.maxContextTokens": {
-          "type": "number",
-          "default": 24000,
-          "minimum": 4000,
-          "maximum": 100000,
-          "description": "Maximum tokens to include in AI context window.",
-          "scope": "application"
-        },
-        "codeAnalyzer.enableAutoIndex": {
-          "type": "boolean",
-          "default": true,
-          "description": "Automatically index the workspace on startup.",
-          "scope": "application"
-        },
-        "codeAnalyzer.docStyle": {
+        "codeAnalyzer.geminiApiKey": {
           "type": "string",
-          "enum": ["jsdoc", "tsdoc", "docstring"],
-          "default": "tsdoc",
-          "description": "Documentation comment style for inline doc generation.",
+          "default": "",
+          "description": "Gemini API key. Get one at https://aistudio.google.com",
           "scope": "application"
         },
-        "codeAnalyzer.enableStreaming": {
-          "type": "boolean",
-          "default": true,
-          "description": "Stream AI responses token-by-token in the chat panel.",
+        "codeAnalyzer.geminiModel": {
+          "type": "string",
+          "default": "gemini-2.5-flash",
+          "description": "Gemini model name.",
           "scope": "application"
         }
       }

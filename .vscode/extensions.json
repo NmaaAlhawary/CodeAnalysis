@@ -6,6 +6,7 @@
     "esbenp.prettier-vscode",
     "bradlc.vscode-tailwindcss",
     "YoavBls.pretty-ts-errors",
-    "github.vscode-github-actions"
+    "github.vscode-github-actions",
+    "nmaaalhawary.code-analyzer"
   ]
 }
