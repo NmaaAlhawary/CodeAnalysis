@@ -1,150 +1,94 @@
-# Continue
+# Code Analyzer
 
-Continue is an open-source AI coding assistant that integrates directly into your editor, enabling intelligent code completion, chat, and automation powered by large language models.
+AI-powered codebase intelligence for VS Code. Understand any project instantly — explanations, architecture diagrams, dependency graphs, and smart documentation, all inside your editor.
 
 ## Features
 
-- **Multi-package monorepo** — Modular architecture split across `core`, `gui`, `extensions/vscode`, and `binary` packages
-- **VS Code extension** — Deep IDE integration via `extensions/vscode` for inline suggestions and chat
-- **Standalone binary** — Headless `binary` package for running Continue outside the editor
-- **Google AI SDK support** — Built-in integration with `@ai-sdk/google` for Gemini model access
-- **TypeScript throughout** — All packages are fully typed with per-package `tsconfig.json` configurations
-- **Concurrent type-checking** — `tsc:watch` script monitors all packages simultaneously via `concurrently`
-- **Automated formatting** — Prettier enforced across all `.js`, `.jsx`, `.ts`, `.tsx`, `.json`, `.css`, and `.md` files
-- **Git hooks** — Pre-commit quality gates managed by Husky
+- **AI Chat** — Multi-turn conversation with full cross-file codebase context. Type `@filename` to inject any file directly.
+- **Architecture Overview** — Generates a complete project brief: purpose, business logic, key components, module table, tech stack, and a Mermaid architecture diagram.
+- **9-Tab Dashboard** — Dependency graph with cycle detection, call graph, git hotspots, module coupling heatmap, symbol search, AI insights, and more.
+- **Explain Code** — Explain any selection or entire file with context from the full project structure.
+- **Auto Documentation** — Generate README, inline JSDoc/TSDoc, and ARCHITECTURE.md. All show a diff before writing.
+- **GitHub Remote Analysis** — Paste any public GitHub URL to analyze it without cloning.
+- **3 AI Providers** — Claude (Anthropic), DeepSeek, or Gemini. Keys stored in VS Code's secure secrets vault.
 
 ## Installation
 
-### Prerequisites
+**From VS Code Marketplace:**
 
-- [Node.js](https://nodejs.org/) v18 or later
-- [npm](https://www.npmjs.com/) v9 or later
+Search `Code Analyzer` in the Extensions panel (`⌘⇧X`) or install from the command line:
 
-### Steps
+```bash
+code --install-extension nmaaalhawary.code-analyzer
+```
 
-1. **Clone the repository**
+**From source:**
 
-   ```bash
-   git clone https://github.com/continuedev/continue.git
-   cd continue
-   ```
+```bash
+git clone https://github.com/NmaaAlhawary/CodeAnalysis.git
+cd CodeAnalysis/vscode-code-analyzer
+npm install
+npm run package
+code --install-extension code-analyzer-2.0.0.vsix
+```
 
-2. **Install root dependencies**
+## Setup
 
-   ```bash
-   npm install
-   ```
-
-3. **Install dependencies for each package**
-
-   ```bash
-   cd core && npm install && cd ..
-   cd gui && npm install && cd ..
-   cd extensions/vscode && npm install && cd ../..
-   cd binary && npm install && cd ..
-   ```
-
-4. **Set up Git hooks**
-
-   ```bash
-   npm run prepare
-   ```
-
-### VS Code Extension (Development)
-
-1. Open the repository root in VS Code
-2. Press `F5` to launch the Extension Development Host
-3. The Continue panel will appear in the Activity Bar
+1. Open VS Code and press `⌘⇧P` → **Code Analyzer: Configure AI Provider**
+2. Choose your AI provider:
+   - **Claude** — [console.anthropic.com](https://console.anthropic.com) *(best quality)*
+   - **DeepSeek** — [platform.deepseek.com](https://platform.deepseek.com) *(fast & affordable)*
+   - **Gemini** — [aistudio.google.com](https://aistudio.google.com) *(free tier)*
+3. Paste your API key — stored securely in VS Code's secrets vault, never in plain settings
+4. Open any project folder and the extension auto-indexes in the background
 
 ## Usage
 
-### Start TypeScript watch mode (all packages)
+| Action | How |
+|---|---|
+| Chat with AI about your codebase | `⌘⇧C` |
+| Architecture overview + diagram | `⌘⇧G` |
+| Open dashboard | `⌘⇧D` |
+| Explain selected code | Select code → `⌘⇧E` |
+| Explain entire file | Right-click → *Explain This File* |
+| Generate README | `⌘⇧P` → *Generate README* |
+| Generate inline docs | Right-click → *Generate Inline Documentation* |
+| Analyze a GitHub repo | `⌘⇧P` → *Analyze GitHub Repository* |
+| AI code review | `⌘⇧P` → *AI Code Review* |
 
-```bash
-npm run tsc:watch
-```
+## Dashboard Tabs
 
-This runs four concurrent watchers — `gui`, `vscode`, `core`, and `binary` — each using their respective `tsconfig.json`:
+| Tab | What it shows |
+|---|---|
+| Overview | Project health score, file stats, language breakdown |
+| File Tree | Clickable file tree with edit-frequency heat overlay |
+| Dependency Graph | Module dependency graph with cycle detection (Tarjan SCC) |
+| Call Graph | Function-to-function call graph for any file |
+| Git Hotspots | Most-edited files, churn vs size scatter plot |
+| Git History | Commit frequency, author contributions |
+| Module Coupling | Cross-module import heatmap |
+| Symbol Search | Search every symbol across the codebase by name, kind, or file |
+| AI Insights | Cached AI narrative: project summary, architectural concerns, refactoring targets |
 
-- `gui/tsconfig.json`
-- `extensions/vscode/tsconfig.json`
-- `core/tsconfig.json`
-- `binary/tsconfig.json`
+## Configuration
 
-### Watch a single package
-
-```bash
-# Core only
-npm run tsc:watch:core
-
-# VS Code extension only
-npm run tsc:watch:vscode
-
-# GUI only
-npm run tsc:watch:gui
-
-# Binary only
-npm run tsc:watch:binary
-```
-
-### Format all source files
-
-```bash
-npm run format
-```
-
-### Check formatting without writing
-
-```bash
-npm run format:check
-```
-
-## Architecture
-
-```mermaid
-flowchart TD
-    Root[Continue Root]
-
-    subgraph Packages
-        Core[core - Business Logic]
-        GUI[gui - React UI]
-        VSCode[extensions/vscode - VS Code Extension]
-        Binary[binary - Standalone Binary]
-    end
-
-    subgraph External
-        GoogleAI[ai-sdk/google - Gemini Models]
-        LLM[LLM Providers]
-    end
-
-    Root --> Core
-    Root --> GUI
-    Root --> VSCode
-    Root --> Binary
-    VSCode --> Core
-    Binary --> Core
-    GUI --> Core
-    Core --> GoogleAI
-    GoogleAI --> LLM
-```
-
-### Module Descriptions
-
-| Package | Path | Role |
+| Setting | Default | Description |
 |---|---|---|
-| **core** | `core/` | Central business logic: LLM orchestration, context retrieval, prompt construction, and model provider integrations including `@ai-sdk/google` |
-| **gui** | `gui/` | React-based chat and configuration UI, compiled and embedded into the VS Code webview |
-| **extensions/vscode** | `extensions/vscode/` | VS Code extension host process; bridges editor events, inline completions, and commands to `core` |
-| **binary** | `binary/` | Standalone Node.js binary that exposes Continue functionality outside of any editor environment |
+| `codeAnalyzer.aiProvider` | `deepseek` | AI provider: `claude`, `deepseek`, or `gemini` |
+| `codeAnalyzer.claudeModel` | `claude-sonnet-4-6` | Claude model name |
+| `codeAnalyzer.geminiModel` | `gemini-2.5-flash` | Gemini model name |
+| `codeAnalyzer.deepseekModel` | `deepseek-chat` | DeepSeek model name |
+| `codeAnalyzer.maxContextTokens` | `24000` | Max tokens sent to AI per request |
+| `codeAnalyzer.enableAutoIndex` | `true` | Auto-index workspace on startup |
+| `codeAnalyzer.enableStreaming` | `true` | Stream AI responses token by token |
+| `codeAnalyzer.docStyle` | `tsdoc` | Doc comment style: `tsdoc`, `jsdoc`, or `docstring` |
+| `codeAnalyzer.enableCodeLens` | `true` | Show ✨ Explain lenses above functions |
 
-## Contributing
+## Requirements
 
-1. **Fork** the repository and create a feature branch: `git checkout -b feat/your-feature`
-2. **Install** all dependencies following the [Installation](#installation) steps above
-3. **Make changes** — keep each package's concerns separate (`core` for logic, `gui` for UI, `extensions/vscode` for editor integration)
-4. **Type-check** your changes: `npm run tsc:watch` (ensure zero errors across all packages)
-5. **Format** your code: `npm run format`
-6. **Commit** using a descriptive message and open a Pull Request against `main`
-7. All PRs must pass formatting checks (`npm run format:check`) enforced by Husky pre-commit hooks
+- VS Code 1.90+
+- An API key for at least one AI provider (Claude, DeepSeek, or Gemini)
 
-For larger changes, please open an issue first to discuss the proposed approach. See [docs.continue.dev](https://docs.continue.dev) for full developer documentation.
+## License
+
+MIT © 2025 NmaaAlhawary
