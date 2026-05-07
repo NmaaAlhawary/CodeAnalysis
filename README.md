@@ -1,22 +1,45 @@
+<div align="center">
+
+<img src="vscode-code-analyzer/assets/icon.png" width="96" height="96" alt="Code Analyzer icon" />
+
 # Code Analyzer
 
-AI-powered codebase intelligence for VS Code. Understand any project instantly — explanations, architecture diagrams, dependency graphs, and smart documentation, all inside your editor.
+**AI-powered codebase intelligence for VS Code.**
 
-## Features
+Understand any project instantly — explanations, architecture diagrams, dependency graphs, and smart documentation, all inside your editor.
 
-- **AI Chat** — Multi-turn conversation with full cross-file codebase context. Type `@filename` to inject any file directly.
-- **Architecture Overview** — Generates a complete project brief: purpose, business logic, key components, module table, tech stack, and a Mermaid architecture diagram.
-- **9-Tab Dashboard** — Dependency graph with cycle detection, call graph, git hotspots, module coupling heatmap, symbol search, AI insights, and more.
-- **Explain Code** — Explain any selection or entire file with context from the full project structure.
-- **Auto Documentation** — Generate README, inline JSDoc/TSDoc, and ARCHITECTURE.md. All show a diff before writing.
-- **GitHub Remote Analysis** — Paste any public GitHub URL to analyze it without cloning.
-- **3 AI Providers** — Claude (Anthropic), DeepSeek, or Gemini. Keys stored in VS Code's secure secrets vault.
+[![VS Code Marketplace](https://img.shields.io/badge/VS%20Code-Marketplace-007ACC?logo=visual-studio-code&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=nmaaalhawary.code-analyzer)
+[![Version](https://img.shields.io/badge/version-2.0.0-a78bfa)](https://github.com/NmaaAlhawary/CodeAnalysis)
+[![License: MIT](https://img.shields.io/badge/license-MIT-10b981)](LICENSE.md)
+
+<br/>
+
+[**↓ Install Free**](https://marketplace.visualstudio.com/items?itemName=nmaaalhawary.code-analyzer) · [Docs](https://nmaaalhawary.github.io/CodeAnalysis/) · [Report Issue](https://github.com/NmaaAlhawary/CodeAnalysis/issues)
+
+</div>
+
+---
+
+## ✦ What it does
+
+Open a folder, index in 2 seconds, then ask — the AI has full cross-file context including your module graph.
+
+| | Feature | Description |
+|---|---|---|
+| 💬 | **Persistent AI Chat** | Multi-turn conversation with full codebase context. Type `@filename` to inject any file. History persists across sessions. |
+| 📊 | **9-Tab Dashboard** | Overview · File Tree · Dependency Graph · Call Graph · Git Hotspots · Git History · Module Coupling · Symbol Search · AI Insights |
+| 🔍 | **Cycle Detection** | Tarjan's SCC algorithm highlights circular imports in red on your dependency graph |
+| 🗺 | **Architecture Diagrams** | AI-generated Mermaid diagrams with automatic syntax fixing. Diagrams that actually render. |
+| 📝 | **Auto Documentation** | Generate README.md, inline JSDoc/TSDoc, and ARCHITECTURE.md — all show a diff before writing |
+| ⬡ | **GitHub Remote Analysis** | Paste any public GitHub URL. Analyzes via REST API — no git clone. 24-hour cache. |
+| 🔗 | **Symbol Search** | Searchable table of every symbol — name, kind, file, line, exported flag, doc coverage |
+| 🧠 | **Choose Your AI** | Claude, DeepSeek, or Gemini — switch anytime. Keys stored in VS Code's secure secrets vault. |
+
+---
 
 ## Installation
 
-**From VS Code Marketplace:**
-
-Search `Code Analyzer` in the Extensions panel (`⌘⇧X`) or install from the command line:
+**From the Marketplace** — search `Code Analyzer` in the Extensions panel (<kbd>⌘⇧X</kbd>) or run:
 
 ```bash
 code --install-extension nmaaalhawary.code-analyzer
@@ -32,29 +55,44 @@ npm run package
 code --install-extension code-analyzer-2.0.0.vsix
 ```
 
-## Setup
+---
 
-1. Open VS Code and press `⌘⇧P` → **Code Analyzer: Configure AI Provider**
-2. Choose your AI provider:
-   - **Claude** — [console.anthropic.com](https://console.anthropic.com) *(best quality)*
-   - **DeepSeek** — [platform.deepseek.com](https://platform.deepseek.com) *(fast & affordable)*
-   - **Gemini** — [aistudio.google.com](https://aistudio.google.com) *(free tier)*
-3. Paste your API key — stored securely in VS Code's secrets vault, never in plain settings
-4. Open any project folder and the extension auto-indexes in the background
+## Setup — 3 steps
+
+**1 · Install the extension** *(see above)*
+
+**2 · Get an AI API key** — the extension is free, you only pay for AI calls (usually pennies):
+
+| Provider | Where to get a key | Notes |
+|---|---|---|
+| ✦ **Claude** | [console.anthropic.com](https://console.anthropic.com) | Best quality |
+| 🚀 **DeepSeek** | [platform.deepseek.com](https://platform.deepseek.com) | Fast & affordable |
+| 🌐 **Gemini** | [aistudio.google.com](https://aistudio.google.com) | Free tier available |
+
+**3 · Configure and go** — open the Command Palette and run:
+
+```
+Code Analyzer: Configure AI Provider
+```
+
+Pick your provider, paste your key. Then open any project and press <kbd>⌘⇧C</kbd> to start chatting with your codebase.
+
+---
 
 ## Usage
 
-| Action | How |
+| Action | Shortcut |
 |---|---|
-| Chat with AI about your codebase | `⌘⇧C` |
-| Architecture overview + diagram | `⌘⇧G` |
-| Open dashboard | `⌘⇧D` |
-| Explain selected code | Select code → `⌘⇧E` |
-| Explain entire file | Right-click → *Explain This File* |
-| Generate README | `⌘⇧P` → *Generate README* |
-| Generate inline docs | Right-click → *Generate Inline Documentation* |
-| Analyze a GitHub repo | `⌘⇧P` → *Analyze GitHub Repository* |
-| AI code review | `⌘⇧P` → *AI Code Review* |
+| Open AI Chat | <kbd>⌘⇧C</kbd> |
+| Open Dashboard | <kbd>⌘⇧D</kbd> |
+| Explain selected code | <kbd>⌘⇧E</kbd> |
+| Generate workspace diagram | <kbd>⌘⇧G</kbd> |
+| Workspace tools | <kbd>⌘⇧A</kbd> |
+| Restart / reload window | <kbd>⌘⇧R</kbd> |
+| Explain file / generate inline docs | Right-click in editor |
+| All commands | <kbd>⌘⇧P</kbd> → `Code Analyzer` |
+
+---
 
 ## Dashboard Tabs
 
@@ -67,28 +105,52 @@ code --install-extension code-analyzer-2.0.0.vsix
 | Git Hotspots | Most-edited files, churn vs size scatter plot |
 | Git History | Commit frequency, author contributions |
 | Module Coupling | Cross-module import heatmap |
-| Symbol Search | Search every symbol across the codebase by name, kind, or file |
+| Symbol Search | Search every symbol by name, kind, or file |
 | AI Insights | Cached AI narrative: project summary, architectural concerns, refactoring targets |
+
+---
+
+## How it compares
+
+| Feature | Code Analyzer | CodeSee | Sourcegraph |
+|---|:---:|:---:|:---:|
+| Free & open source | ✅ | ❌ | ❌ |
+| Works inside VS Code | ✅ | ~ | ✅ |
+| Full cross-file AI context | ✅ | ✅ | ✅ |
+| AI chat with streaming | ✅ | ~ | ✅ |
+| Architecture diagrams | ✅ | ✅ | ~ |
+| Cycle detection | ✅ | ❌ | ❌ |
+| Auto doc generation | ✅ | ❌ | ❌ |
+| GitHub remote analysis | ✅ | ❌ | ✅ |
+| Your code stays local | ✅ | ❌ | ❌ |
+
+---
 
 ## Configuration
 
 | Setting | Default | Description |
 |---|---|---|
-| `codeAnalyzer.aiProvider` | `deepseek` | AI provider: `claude`, `deepseek`, or `gemini` |
+| `codeAnalyzer.aiProvider` | `claude` | AI provider: `claude`, `deepseek`, or `gemini` |
 | `codeAnalyzer.claudeModel` | `claude-sonnet-4-6` | Claude model name |
 | `codeAnalyzer.geminiModel` | `gemini-2.5-flash` | Gemini model name |
 | `codeAnalyzer.deepseekModel` | `deepseek-chat` | DeepSeek model name |
-| `codeAnalyzer.maxContextTokens` | `24000` | Max tokens sent to AI per request |
+| `codeAnalyzer.maxContextTokens` | `24000` | Max tokens sent per request |
 | `codeAnalyzer.enableAutoIndex` | `true` | Auto-index workspace on startup |
 | `codeAnalyzer.enableStreaming` | `true` | Stream AI responses token by token |
-| `codeAnalyzer.docStyle` | `tsdoc` | Doc comment style: `tsdoc`, `jsdoc`, or `docstring` |
+| `codeAnalyzer.docStyle` | `tsdoc` | Doc style: `tsdoc`, `jsdoc`, or `docstring` |
 | `codeAnalyzer.enableCodeLens` | `true` | Show ✨ Explain lenses above functions |
+
+---
 
 ## Requirements
 
 - VS Code 1.90+
 - An API key for at least one AI provider (Claude, DeepSeek, or Gemini)
 
-## License
+---
 
-MIT © 2025 NmaaAlhawary
+<div align="center">
+
+MIT © 2025 [NmaaAlhawary](https://github.com/NmaaAlhawary)
+
+</div>
