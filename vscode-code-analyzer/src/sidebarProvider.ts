@@ -331,6 +331,14 @@ body{
   </div>
 </button>
 
+<button class="action" onclick="run('codeAnalyzer.restartExtension')">
+  <div class="action-icon ic-gray">↺</div>
+  <div class="action-text">
+    <div class="action-label">Restart Extension</div>
+    <div class="action-desc">Reload VS Code window</div>
+  </div>
+</button>
+
 <script>
 const vscode = acquireVsCodeApi();
 function run(command) { vscode.postMessage({ command }); }

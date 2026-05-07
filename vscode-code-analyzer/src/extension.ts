@@ -265,6 +265,12 @@ export function activate(context: vscode.ExtensionContext): void {
     })
   );
 
+  context.subscriptions.push(
+    vscode.commands.registerCommand("codeAnalyzer.restartExtension", () => {
+      vscode.commands.executeCommand("workbench.action.reloadWindow");
+    })
+  );
+
   // ── Code Lens: inline "Explain" above functions & classes ───────────────────
   context.subscriptions.push(
     vscode.commands.registerCommand(

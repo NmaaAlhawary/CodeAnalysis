@@ -123,6 +123,11 @@
       {
         "command": "codeAnalyzer.generateArchitectureDoc",
         "title": "Code Analyzer: Generate Architecture Document"
+      },
+      {
+        "command": "codeAnalyzer.restartExtension",
+        "title": "Code Analyzer: Restart Extension",
+        "icon": "$(refresh)"
       }
     ],
     "menus": {
