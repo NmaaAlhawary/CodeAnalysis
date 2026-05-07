@@ -3,7 +3,7 @@
   "displayName": "Code Analyzer",
   "description": "Explain code, generate architecture diagrams, inspect business logic, and explore a live analysis dashboard in VS Code.",
   "version": "2.0.0",
-  "publisher": "nmaaalhawary",
+  "publisher": "NmaaHawary",
   "engines": { "vscode": "^1.90.0" },
   "license": "SEE LICENSE IN LICENSE.md",
   "icon": "assets/icon.png",
