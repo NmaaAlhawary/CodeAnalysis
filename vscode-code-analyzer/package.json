@@ -1,6 +1,6 @@
 {
   "name": "codebase-intelligence",
-  "displayName": "Code Analyzer",
+  "displayName": "Codebase Intelligence",
   "description": "Explain code, generate architecture diagrams, inspect business logic, and explore a live analysis dashboard in VS Code.",
   "version": "2.0.0",
   "publisher": "NmaaHawary",
